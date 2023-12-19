@@ -1,19 +1,37 @@
-# open-source-template
-Template project for open source projects from SingleStore
+# JSON Keys functions
 
-## Usage
+## Using the functions
 
-1. [Sign up](https://www.singlestore.com/try-free/) for a free SingleStore license. This allows you
-   to run up to 4 nodes up to 32 gigs each for free. Grab your license key from
-   [SingleStore portal](https://portal.singlestore.com/?utm_medium=osm&utm_source=github) and set it as an environment
-   variable.
+For the case of the examples below, the `bookjson` column has entries of the
+following form:
+```
+{
+    "category": "web",
+    "language": "en",
+    "title": "XQuery Kick Start",
+    "authors": {
+        "first": "James McGovern",
+        "second": "Per Bothner",
+        "third": "Kurt Cagle",
+        "fourth": "James Linn",
+        "fifth": "Vaidyanathon Nagarajan"    
+    },
+    "year": 2003,
+    "price": 49.99
+}
+```
 
-   ```bash
-   export SINGLESTORE_LICENSE="singlestore license"
-   ```
+An example of using the UDF to retrieve top-level keys:
+```
+select jsonkeys_scalar(bookjson, []) as x from booktable;
+```
 
-## Resources
+An example of using the UDF to retrieve keys from two levels:
+```
+select jsonkeys_scalar(bookjson, ['$', '$.authors']) as x from booktable;
+```
 
-* [Documentation](https://docs.singlestore.com)
-* [Twitter](https://twitter.com/SingleStoreDevs)
-* [SingleStore forums](https://www.singlestore.com/forum)
+An example of using the TVF to retrieve top-level keys:
+```
+select j.* from booktable b, jsonkeys_table(b.bookjson, []) as j;
+```
