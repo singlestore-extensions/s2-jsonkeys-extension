@@ -6,32 +6,6 @@ extern crate serde_json;
 
 impl jsonkeys::Jsonkeys for Jsonkeys {
     fn jsonkeys_scalar(json: String, exprs: Vec<String>) -> String {
-            /*
-        let mut es = exprs;
-        if es.len() == 0 {
-            es = vec![String::from("$")];
-        }
-        let mut res = String::from("[");
-	    let mut first = true;
-        for e in es {
-            let v = serde_json::from_str(json.as_str()).unwrap();
-            let out = jsonpath_lib::select(&v, e.as_str()).unwrap();
-            for o in out.iter() {
-                if let serde_json::Value::Object(m) = o {
-                    for (k, _) in m {
-                        if first {
-                            first = false;
-                        } else {
-                            res.push_str(", ");
-                        }
-                        res.push_str(&k);
-                    }
-                }
-            }
-        }
-        res.push_str("]");
-        res
-        */
         serde_json::ser::to_string(&Self::jsonkeys_table(json, exprs)).unwrap()
     }
 
