@@ -19,3 +19,4 @@ AS WASM FROM BASE64 '$WASM_B64'
 WITH WIT FROM BASE64 '$WIT_B64';
 EOF
 
+echo "Loader created successfully."

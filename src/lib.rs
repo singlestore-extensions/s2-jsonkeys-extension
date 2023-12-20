@@ -4,6 +4,20 @@ struct Jsonkeys;
 extern crate jsonpath_lib;
 extern crate serde_json;
 
+#[inline(never)]
+#[no_mangle]
+#[allow(non_snake_case)]
+fn ERROR__MALFORMED_JSON() {
+    panic!("ERROR__MALFORMED_JSON");
+}
+
+#[inline(never)]
+#[no_mangle]
+#[allow(non_snake_case)]
+fn ERROR__MALFORMED_JSONPATH() {
+    panic!("ERROR__MALFORMED_JSONPATH");
+}
+
 impl jsonkeys::Jsonkeys for Jsonkeys {
     fn jsonkeys_scalar(json: String, exprs: Vec<String>) -> String {
         serde_json::ser::to_string(&Self::jsonkeys_table(json, exprs)).unwrap()
@@ -16,8 +30,12 @@ impl jsonkeys::Jsonkeys for Jsonkeys {
         }
         let mut res: Vec<String> = vec![];
         for e in es {
-            let v = serde_json::from_str(json.as_str()).unwrap();
-            let out = jsonpath_lib::select(&v, e.as_str()).unwrap();
+            let v = serde_json::from_str(json.as_str())
+                .map_err(|_| ERROR__MALFORMED_JSON())
+                .unwrap();
+            let out = jsonpath_lib::select(&v, e.as_str())
+                .map_err(|_| ERROR__MALFORMED_JSONPATH())
+                .unwrap();
             for o in out.iter() {
                 if let serde_json::Value::Object(m) = o {
                     for (k, _) in m {

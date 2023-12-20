@@ -11,7 +11,7 @@ release: wasm
 
 .PHONY: wasm
 wasm:
-	cargo wasi build --lib $(RELFLAGS)
+	cargo wasi build --lib $(RELFLAGS) && ./create_loader.sh
 
 .PHONY: clean
 clean:
