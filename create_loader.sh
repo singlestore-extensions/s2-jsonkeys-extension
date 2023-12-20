@@ -8,7 +8,7 @@ OUTFILE=load_extension.sql
 rm -f $OUTFILE
 
 cat <<EOF >> $OUTFILE
-CREATE OR REPLACE FUNCTION jsonkeys_table(json longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, expr array(text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL)) RETURNS TABLE(foo text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL)
+CREATE OR REPLACE FUNCTION jsonkeys_table(json longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, expr array(text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL)) RETURNS TABLE(table_col text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL)
 AS WASM FROM BASE64 '$WASM_B64';
 EOF
 
