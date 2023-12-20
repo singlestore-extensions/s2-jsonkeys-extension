@@ -8,15 +8,13 @@ OUTFILE=load_extension.sql
 rm -f $OUTFILE
 
 cat <<EOF >> $OUTFILE
-CREATE OR REPLACE FUNCTION jsonkeys_table RETURNS TABLE
-AS WASM FROM BASE64 '$WASM_B64'
-WITH WIT FROM BASE64 '$WIT_B64';
+CREATE OR REPLACE FUNCTION jsonkeys_table(json longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, expr array(text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL)) RETURNS TABLE(foo text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL)
+AS WASM FROM BASE64 '$WASM_B64';
 EOF
 
 cat <<EOF >> $OUTFILE
-CREATE OR REPLACE FUNCTION jsonkeys_scalar
-AS WASM FROM BASE64 '$WASM_B64'
-WITH WIT FROM BASE64 '$WIT_B64';
+CREATE OR REPLACE FUNCTION jsonkeys_scalar(json longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, expr array(text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL)) RETURNS text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL 
+AS WASM FROM BASE64 '$WASM_B64';
 EOF
 
 echo "Loader created successfully."
