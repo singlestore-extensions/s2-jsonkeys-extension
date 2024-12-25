@@ -1,0 +1,2 @@
+jsonkeys-scalar: func(json: string, expr: list<string>) -> string
+jsonkeys-table: func(json: string, expr: list<string>) -> list<string>

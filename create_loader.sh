@@ -1,9 +1,9 @@
-WASM_PATH=target/wasm32-wasi/release/jsonkeys.wasm
-WIT_PATH=jsonkeys.wit
+WASM_PATH=target/wasm32-wasip1/release/extension.wasm
+WIT_PATH=build/extension.wit
 WASM_B64=$(base64 -w 0 "${WASM_PATH}")
 WIT_B64=$(base64 -w 0 "${WIT_PATH}")
 
-OUTFILE=load_extension.sql
+OUTFILE=build/load_extension.sql
 
 rm -f $OUTFILE
 

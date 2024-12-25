@@ -1,5 +1,6 @@
-wit_bindgen_rust::export!("jsonkeys.wit");
-struct Jsonkeys;
+wit_bindgen_rust::export!("build/extension.wit");
+
+struct Extension;
 
 extern crate jsonpath_lib;
 extern crate serde_json;
@@ -18,7 +19,7 @@ fn ERROR__MALFORMED_JSONPATH() {
     panic!("ERROR__MALFORMED_JSONPATH");
 }
 
-impl jsonkeys::Jsonkeys for Jsonkeys {
+impl extension::Extension for Extension {
     fn jsonkeys_scalar(json: String, exprs: Vec<String>) -> String {
         serde_json::ser::to_string(&Self::jsonkeys_table(json, exprs)).unwrap()
     }
